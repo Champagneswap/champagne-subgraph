@@ -1,0 +1,13 @@
+{
+  "name": "exchange",
+  "description": "Champagne Subgraph",
+  "version": "1.0.0",
+  "repository": "git@github.com:champagneswap/champagne-subgraph.git",
+  "author": "ChampagneSwap",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "deploy": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ champagneswap/exchange subgraph.yaml"
+  }
+}
