@@ -2,29 +2,29 @@ specVersion: 0.0.2
 description: Track Pairs and Tokens on ChampagneSwap (v2) protocol
 repository: https://github.com/ChampagneSwap
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Factory
     network: bsc
     source:
-      address: '0xb31A337f1C3ee7fA2b2B83c6F8ee0CA643D807a0'
+      address: "0xb31A337f1C3ee7fA2b2B83c6F8ee0CA643D807a0"
       abi: Factory
       startBlock: 6809737
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./mappings/factory.ts
+      file: Factory/Factory.wasm
       entities:
         - Factory
         - Token
         - Pair
       abis:
         - name: Factory
-          file: ./abis/Factory.json
+          file: Factory/abis/Factory.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: Factory/abis/ERC20.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handlePairCreated

@@ -4,7 +4,7 @@ import { Pair, Token, Bundle } from "../generated/schema";
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from "./utils";
 
 let WBNB_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
-let BUSD_WBNB_PAIR = "0x58f876857a02d6762e0101bb5c46a8c1ed44dc16"; // created block 589414
+let BUSD_WBNB_PAIR = "0x4e9ca7990c4cbb96050f054c9ca7b41f48d799f8"; // created block 589414
 let USDT_WBNB_PAIR = "0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae"; // created block 648115
 
 export function getBnbPriceInUSD(): BigDecimal {

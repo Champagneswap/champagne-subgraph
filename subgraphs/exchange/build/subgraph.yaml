@@ -1,33 +1,34 @@
 specVersion: 0.0.2
-description: ChampagneSwap is a decentralized protocol for automated token exchange on Binance Smart Chain.
+description: ChampagneSwap is a decentralized protocol for automated token exchange on
+  Binance Smart Chain.
 repository: https://github.com/champagneswap
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Factory
     network: bsc
     source:
-      address: '0xb31A337f1C3ee7fA2b2B83c6F8ee0CA643D807a0'
+      address: "0xb31A337f1C3ee7fA2b2B83c6F8ee0CA643D807a0"
       abi: Factory
       startBlock: 6809737
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./mappings/factory.ts
+      file: Factory/Factory.wasm
       entities:
         - Pair
         - Token
       abis:
         - name: Factory
-          file: ./abis/Factory.json
+          file: Factory/abis/Factory.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: Factory/abis/ERC20.json
         - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
+          file: Factory/abis/ERC20NameBytes.json
         - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
+          file: Factory/abis/ERC20SymbolBytes.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handlePairCreated
@@ -41,15 +42,15 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./mappings/core.ts
+      file: templates/Pair/Pair.wasm
       entities:
         - Pair
         - Token
       abis:
         - name: Factory
-          file: ./abis/Factory.json
+          file: Pair/abis/Factory.json
         - name: Pair
-          file: ./abis/Pair.json
+          file: Pair/abis/Pair.json
       eventHandlers:
         - event: Mint(indexed address,uint256,uint256)
           handler: handleMint
