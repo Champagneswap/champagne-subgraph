@@ -2,7 +2,10 @@
 import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { Bundle, Competition, Team, User } from "../generated/schema";
 import { Pair as PairTemplate } from "../generated/templates";
-import { NewCompetitionStatus, UserRegister } from "../generated/TradingCompetitionV2/TradingCompetitionV2";
+import {
+  NewCompetitionStatus,
+  UserRegister,
+} from "../generated/TradingCompetitionV2/TradingCompetitionV2";
 import {
   BD_ZERO,
   BI_ONE,

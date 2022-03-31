@@ -1,8 +1,20 @@
 /* eslint-disable prefer-const */
 import { BigDecimal, log } from "@graphprotocol/graph-ts";
-import { Bundle, Competition, Team, User, PairStats } from "../generated/schema";
+import {
+  Bundle,
+  Competition,
+  Team,
+  User,
+  PairStats,
+} from "../generated/schema";
 import { Swap } from "../generated/templates/Pair/Pair";
-import { BD_1E18, BD_ZERO, BI_ONE, TRACKED_TOKEN_BNB_PAIRS, TRACKED_TOKEN_BUSD_PAIRS } from "./utils";
+import {
+  BD_1E18,
+  BD_ZERO,
+  BI_ONE,
+  TRACKED_TOKEN_BNB_PAIRS,
+  TRACKED_TOKEN_BUSD_PAIRS,
+} from "./utils";
 
 /**
  * SWAP
@@ -12,14 +24,18 @@ export function handleSwap(event: Swap): void {
   let competition = Competition.load("2");
   // Competition is not in progress, ignoring trade.
   if (competition.status.notEqual(BI_ONE)) {
-    log.info("Competition is not in progress, ignoring trade; status: {}", [competition.status.toString()]);
+    log.info("Competition is not in progress, ignoring trade; status: {}", [
+      competition.status.toString(),
+    ]);
     return;
   }
 
   // User is not registered for the competition, skipping.
   let user = User.load(event.transaction.from.toHex());
   if (user === null) {
-    log.info("User is not registered, ignoring trade; user: {}", [event.transaction.from.toHex()]);
+    log.info("User is not registered, ignoring trade; user: {}", [
+      event.transaction.from.toHex(),
+    ]);
     return;
   }
 
@@ -33,22 +49,33 @@ export function handleSwap(event: Swap): void {
   let busdIN: BigDecimal;
   let busdOUT: BigDecimal;
 
-  log.info("Pair info: {}, amount0In: {}, amount1In: {}, amount0Out: {}, amount1Out: {}", [
-    event.address.toHex(),
-    event.params.amount0In.toString(),
-    event.params.amount1In.toString(),
-    event.params.amount0Out.toString(),
-    event.params.amount1Out.toString(),
-  ]);
+  log.info(
+    "Pair info: {}, amount0In: {}, amount1In: {}, amount0Out: {}, amount1Out: {}",
+    [
+      event.address.toHex(),
+      event.params.amount0In.toString(),
+      event.params.amount1In.toString(),
+      event.params.amount0Out.toString(),
+      event.params.amount1Out.toString(),
+    ]
+  );
 
   if (TRACKED_TOKEN_BUSD_PAIRS.includes(event.address.toHex())) {
     busdIN = event.params.amount1In.toBigDecimal().div(BD_1E18);
     busdOUT = event.params.amount1Out.toBigDecimal().div(BD_1E18);
-    log.info("Pair found: {}, busdIN: {}, busdOUT: {}", [event.address.toHex(), busdIN.toString(), busdOUT.toString()]);
+    log.info("Pair found: {}, busdIN: {}, busdOUT: {}", [
+      event.address.toHex(),
+      busdIN.toString(),
+      busdOUT.toString(),
+    ]);
   } else if (TRACKED_TOKEN_BNB_PAIRS.includes(event.address.toHex())) {
     bnbIN = event.params.amount1In.toBigDecimal().div(BD_1E18);
     bnbOUT = event.params.amount1Out.toBigDecimal().div(BD_1E18);
-    log.info("Pair found: {}, bnbIN: {}, bnbOUT: {}", [event.address.toHex(), bnbIN.toString(), bnbOUT.toString()]);
+    log.info("Pair found: {}, bnbIN: {}, bnbOUT: {}", [
+      event.address.toHex(),
+      bnbIN.toString(),
+      bnbOUT.toString(),
+    ]);
   } else {
     log.info("Pair not tracked: {}", [event.address.toHex()]);
     return;

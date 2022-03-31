@@ -25,7 +25,10 @@ export function fetchSymbol(collectionAddress: Address): string {
   return "unknown";
 }
 
-export function fetchTokenURI(collectionAddress: Address, tokenId: BigInt): string | null {
+export function fetchTokenURI(
+  collectionAddress: Address,
+  tokenId: BigInt
+): string | null {
   let contract = IERC721.bind(collectionAddress);
 
   let tokenURIResult = contract.try_tokenURI(tokenId);
@@ -36,7 +39,10 @@ export function fetchTokenURI(collectionAddress: Address, tokenId: BigInt): stri
   return null;
 }
 
-export function fetchBunnyId(collectionAddress: Address, tokenId: BigInt): BigInt | null {
+export function fetchBunnyId(
+  collectionAddress: Address,
+  tokenId: BigInt
+): BigInt | null {
   let contract = PancakeBunnies.bind(collectionAddress);
 
   let bunnyIdResult = contract.try_getBunnyId(tokenId);

@@ -5,7 +5,10 @@ import { ERC20NameBytes } from "../../generated/SmartChefFactory/ERC20NameBytes"
 import { ERC20SymbolBytes } from "../../generated/SmartChefFactory/ERC20SymbolBytes";
 
 export function isNullBnbValue(value: string): boolean {
-  return value == "0x0000000000000000000000000000000000000000000000000000000000000001";
+  return (
+    value ==
+    "0x0000000000000000000000000000000000000000000000000000000000000001"
+  );
 }
 
 export function fetchTokenName(tokenAddress: Address): string {

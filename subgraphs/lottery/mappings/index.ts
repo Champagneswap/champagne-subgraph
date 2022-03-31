@@ -53,7 +53,9 @@ export function handleLotteryNumberDrawn(event: LotteryNumberDrawn): void {
 export function handleTicketsPurchase(event: TicketsPurchase): void {
   let lottery = Lottery.load(event.params.lotteryId.toString());
   if (lottery === null) {
-    log.warning("Trying to purchase tickets for an unknown lottery - #{}", [event.params.lotteryId.toString()]);
+    log.warning("Trying to purchase tickets for an unknown lottery - #{}", [
+      event.params.lotteryId.toString(),
+    ]);
   }
   lottery.totalTickets = lottery.totalTickets.plus(event.params.numberTickets);
   lottery.save();
@@ -69,7 +71,9 @@ export function handleTicketsPurchase(event: TicketsPurchase): void {
     user.save();
   }
   user.totalTickets = user.totalTickets.plus(event.params.numberTickets);
-  user.totalCham = user.totalCham.plus(event.params.numberTickets.toBigDecimal().times(lottery.ticketPrice));
+  user.totalCham = user.totalCham.plus(
+    event.params.numberTickets.toBigDecimal().times(lottery.ticketPrice)
+  );
   user.save();
 
   let roundId = concat(
@@ -99,7 +103,9 @@ export function handleTicketsPurchase(event: TicketsPurchase): void {
 export function handleTicketsClaim(event: TicketsClaim): void {
   let lottery = Lottery.load(event.params.lotteryId.toString());
   if (lottery !== null) {
-    lottery.claimedTickets = lottery.claimedTickets.plus(event.params.numberTickets);
+    lottery.claimedTickets = lottery.claimedTickets.plus(
+      event.params.numberTickets
+    );
     lottery.save();
   }
 

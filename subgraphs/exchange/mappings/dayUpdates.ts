@@ -1,10 +1,20 @@
 /* eslint-disable prefer-const */
 import { PairHourData } from "../generated/schema";
 import { BigInt, BigDecimal, ethereum } from "@graphprotocol/graph-ts";
-import { Pair, Bundle, Token, ChampagneFactory, ChampagneDayData, PairDayData, TokenDayData } from "../generated/schema";
+import {
+  Pair,
+  Bundle,
+  Token,
+  ChampagneFactory,
+  ChampagneDayData,
+  PairDayData,
+  TokenDayData,
+} from "../generated/schema";
 import { ONE_BI, ZERO_BD, ZERO_BI, FACTORY_ADDRESS } from "./utils";
 
-export function updateChampagneDayData(event: ethereum.Event): ChampagneDayData {
+export function updateChampagneDayData(
+  event: ethereum.Event
+): ChampagneDayData {
   let champagne = ChampagneFactory.load(FACTORY_ADDRESS);
   let timestamp = event.block.timestamp.toI32();
   let dayID = timestamp / 86400;
@@ -32,7 +42,10 @@ export function updatePairDayData(event: ethereum.Event): PairDayData {
   let timestamp = event.block.timestamp.toI32();
   let dayID = timestamp / 86400;
   let dayStartTimestamp = dayID * 86400;
-  let dayPairID = event.address.toHex().concat("-").concat(BigInt.fromI32(dayID).toString());
+  let dayPairID = event.address
+    .toHex()
+    .concat("-")
+    .concat(BigInt.fromI32(dayID).toString());
   let pair = Pair.load(event.address.toHex());
   let pairDayData = PairDayData.load(dayPairID);
   if (pairDayData === null) {
@@ -60,7 +73,10 @@ export function updatePairHourData(event: ethereum.Event): PairHourData {
   let timestamp = event.block.timestamp.toI32();
   let hourIndex = timestamp / 3600;
   let hourStartUnix = hourIndex * 3600;
-  let hourPairID = event.address.toHex().concat("-").concat(BigInt.fromI32(hourIndex).toString());
+  let hourPairID = event.address
+    .toHex()
+    .concat("-")
+    .concat(BigInt.fromI32(hourIndex).toString());
   let pair = Pair.load(event.address.toHex());
   let pairHourData = PairHourData.load(hourPairID);
   if (pairHourData === null) {
@@ -82,12 +98,18 @@ export function updatePairHourData(event: ethereum.Event): PairHourData {
   return pairHourData as PairHourData;
 }
 
-export function updateTokenDayData(token: Token, event: ethereum.Event): TokenDayData {
+export function updateTokenDayData(
+  token: Token,
+  event: ethereum.Event
+): TokenDayData {
   let bundle = Bundle.load("1");
   let timestamp = event.block.timestamp.toI32();
   let dayID = timestamp / 86400;
   let dayStartTimestamp = dayID * 86400;
-  let tokenDayID = token.id.toString().concat("-").concat(BigInt.fromI32(dayID).toString());
+  let tokenDayID = token.id
+    .toString()
+    .concat("-")
+    .concat(BigInt.fromI32(dayID).toString());
 
   let tokenDayData = TokenDayData.load(tokenDayID);
   if (tokenDayData === null) {
@@ -103,8 +125,12 @@ export function updateTokenDayData(token: Token, event: ethereum.Event): TokenDa
   }
   tokenDayData.priceUSD = token.derivedBNB.times(bundle.bnbPrice);
   tokenDayData.totalLiquidityToken = token.totalLiquidity;
-  tokenDayData.totalLiquidityBNB = token.totalLiquidity.times(token.derivedBNB as BigDecimal);
-  tokenDayData.totalLiquidityUSD = tokenDayData.totalLiquidityBNB.times(bundle.bnbPrice);
+  tokenDayData.totalLiquidityBNB = token.totalLiquidity.times(
+    token.derivedBNB as BigDecimal
+  );
+  tokenDayData.totalLiquidityUSD = tokenDayData.totalLiquidityBNB.times(
+    bundle.bnbPrice
+  );
   tokenDayData.dailyTxns = tokenDayData.dailyTxns.plus(ONE_BI);
   tokenDayData.save();
 

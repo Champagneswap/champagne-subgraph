@@ -14,7 +14,9 @@ export let ZERO_BD = BigDecimal.fromString("0");
 export let ONE_BD = BigDecimal.fromString("1");
 export let BI_18 = BigInt.fromI32(18);
 
-export let factoryContract = FactoryContract.bind(Address.fromString(FACTORY_ADDRESS));
+export let factoryContract = FactoryContract.bind(
+  Address.fromString(FACTORY_ADDRESS)
+);
 
 export function exponentToBigDecimal(decimals: BigInt): BigDecimal {
   let bd = BigDecimal.fromString("1");
@@ -24,7 +26,10 @@ export function exponentToBigDecimal(decimals: BigInt): BigDecimal {
   return bd;
 }
 
-export function convertTokenToDecimal(tokenAmount: BigInt, exchangeDecimals: BigInt): BigDecimal {
+export function convertTokenToDecimal(
+  tokenAmount: BigInt,
+  exchangeDecimals: BigInt
+): BigDecimal {
   if (exchangeDecimals == ZERO_BI) {
     return tokenAmount.toBigDecimal();
   }
@@ -32,7 +37,10 @@ export function convertTokenToDecimal(tokenAmount: BigInt, exchangeDecimals: Big
 }
 
 export function isNullBnbValue(value: string): boolean {
-  return value == "0x0000000000000000000000000000000000000000000000000000000000000001";
+  return (
+    value ==
+    "0x0000000000000000000000000000000000000000000000000000000000000001"
+  );
 }
 
 export function fetchTokenSymbol(tokenAddress: Address): string {

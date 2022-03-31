@@ -25,7 +25,7 @@ export function handleWhitelistAdd(event: WhitelistAdd): void {
     bidder = new Bidder(event.params.account.toHex());
     bidder.isWhitelisted = true;
     bidder.totalBids = ZERO_BI;
-    bidder.totalCake = ZERO_BD;
+    bidder.totalCham = ZERO_BD;
     bidder.block = event.block.number;
     bidder.timestamp = event.block.timestamp;
     bidder.save();
@@ -40,7 +40,7 @@ export function handleWhitelistRemove(event: WhitelistRemove): void {
     bidder = new Bidder(event.params.account.toHex());
     bidder.isWhitelisted = false;
     bidder.totalBids = ZERO_BI;
-    bidder.totalCake = ZERO_BD;
+    bidder.totalCham = ZERO_BD;
     bidder.block = event.block.number;
     bidder.timestamp = event.block.timestamp;
     bidder.save();
@@ -56,7 +56,7 @@ export function handleWhitelistRemove(event: WhitelistRemove): void {
 export function handleAuctionStart(event: AuctionStart): void {
   let auction = new Auction(event.params.auctionId.toString());
   auction.totalBids = ZERO_BI;
-  auction.totalCake = ZERO_BD;
+  auction.totalCham = ZERO_BD;
   auction.status = "Open";
   auction.startBlock = event.params.startBlock;
   auction.endBlock = event.params.endBlock;
@@ -70,7 +70,9 @@ export function handleAuctionClose(event: AuctionClose): void {
   let auction = Auction.load(event.params.auctionId.toString());
   if (auction !== null) {
     auction.status = "Close";
-    auction.leaderboardThreshold = toBigDecimal(event.params.participationLimit);
+    auction.leaderboardThreshold = toBigDecimal(
+      event.params.participationLimit
+    );
     auction.save();
   }
 }
@@ -79,14 +81,16 @@ export function handleAuctionBid(event: AuctionBid): void {
   let auction = Auction.load(event.params.auctionId.toString());
   if (auction !== null) {
     auction.totalBids = auction.totalBids.plus(ONE_BI);
-    auction.totalCake = auction.totalCake.plus(toBigDecimal(event.params.amount));
+    auction.totalCham = auction.totalCham.plus(
+      toBigDecimal(event.params.amount)
+    );
     auction.save();
   }
 
   let bidder = Bidder.load(event.params.account.toHex());
   if (bidder !== null) {
     bidder.totalBids = bidder.totalBids.plus(ONE_BI);
-    bidder.totalCake = bidder.totalCake.plus(toBigDecimal(event.params.amount));
+    bidder.totalCham = bidder.totalCham.plus(toBigDecimal(event.params.amount));
     bidder.save();
   }
 }

@@ -17,7 +17,9 @@ export function getBnbPriceInUSD(): BigDecimal {
     if (totalLiquidityBNB.notEqual(ZERO_BD)) {
       let busdWeight = busdPair.reserve0.div(totalLiquidityBNB);
       let usdtWeight = usdtPair.reserve1.div(totalLiquidityBNB);
-      return busdPair.token1Price.times(busdWeight).plus(usdtPair.token0Price.times(usdtWeight));
+      return busdPair.token1Price
+        .times(busdWeight)
+        .plus(usdtPair.token0Price.times(usdtWeight));
     } else {
       return ZERO_BD;
     }
@@ -54,14 +56,23 @@ export function findBnbPerToken(token: Token): BigDecimal {
   }
   // loop through whitelist and check if paired with any
   for (let i = 0; i < WHITELIST.length; ++i) {
-    let pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
+    let pairAddress = factoryContract.getPair(
+      Address.fromString(token.id),
+      Address.fromString(WHITELIST[i])
+    );
     if (pairAddress.toHex() != ADDRESS_ZERO) {
       let pair = Pair.load(pairAddress.toHex());
-      if (pair.token0 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
+      if (
+        pair.token0 == token.id &&
+        pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)
+      ) {
         let token1 = Token.load(pair.token1);
         return pair.token1Price.times(token1.derivedBNB as BigDecimal); // return token1 per our token * BNB per token 1
       }
-      if (pair.token1 == token.id && pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)) {
+      if (
+        pair.token1 == token.id &&
+        pair.reserveBNB.gt(MINIMUM_LIQUIDITY_THRESHOLD_BNB)
+      ) {
         let token0 = Token.load(pair.token0);
         return pair.token0Price.times(token0.derivedBNB as BigDecimal); // return token0 per our token * BNB per token 0
       }
@@ -88,7 +99,10 @@ export function getTrackedVolumeUSD(
 
   // both are whitelist tokens, take average of both amounts
   if (WHITELIST.includes(token0.id) && WHITELIST.includes(token1.id)) {
-    return tokenAmount0.times(price0).plus(tokenAmount1.times(price1)).div(BigDecimal.fromString("2"));
+    return tokenAmount0
+      .times(price0)
+      .plus(tokenAmount1.times(price1))
+      .div(BigDecimal.fromString("2"));
   }
 
   // take full value of the whitelisted token amount

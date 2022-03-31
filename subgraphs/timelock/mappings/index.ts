@@ -1,7 +1,11 @@
 /* eslint-disable prefer-const */
 import { BigInt } from "@graphprotocol/graph-ts";
 import { Timelock } from "../generated/schema";
-import { CancelTransaction, ExecuteTransaction, QueueTransaction } from "../generated/Timelock/Timelock";
+import {
+  CancelTransaction,
+  ExecuteTransaction,
+  QueueTransaction,
+} from "../generated/Timelock/Timelock";
 
 export function handleCanceledTransaction(event: CancelTransaction): void {
   let timelock = Timelock.load(event.params.txHash.toHex());

@@ -1,0 +1,63 @@
+specVersion: 0.0.2
+description: Champagne Trading Competition V1
+repository: https://github.com/ChampagneSwap
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: TradingCompetitionV2
+    network: bsc
+    source:
+      address: "0x9b872C05C38A3563393668839659bA336Cc969B2"
+      abi: TradingCompetitionV2
+      startBlock: 13321400
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: TradingCompetitionV2/TradingCompetitionV2.wasm
+      entities:
+        - Bundle
+        - Competition
+        - Team
+        - User
+        - PairStats
+      abis:
+        - name: TradingCompetitionV2
+          file: TradingCompetitionV2/abis/TradingCompetitionV2.json
+        - name: Factory
+          file: TradingCompetitionV2/abis/Factory.json
+        - name: Pair
+          file: TradingCompetitionV2/abis/Pair.json
+      blockHandlers:
+        - handler: handleBlock
+      eventHandlers:
+        - event: UserRegister(address,uint256,uint256)
+          handler: handleUserRegister
+        - event: NewCompetitionStatus(uint8,uint256)
+          handler: handleNewCompetitionStatus
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: bsc
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: templates/Pair/Pair.wasm
+      entities:
+        - Bundle
+        - Competition
+        - Team
+        - User
+        - PairStats
+      abis:
+        - name: Factory
+          file: Pair/abis/Factory.json
+        - name: Pair
+          file: Pair/abis/Pair.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap

@@ -2,7 +2,11 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { Factory, SmartChef, Token } from "../generated/schema";
 import { NewSmartChefContract } from "../generated/SmartChefFactory/SmartChefFactory";
-import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol } from "./utils/erc20";
+import {
+  fetchTokenDecimals,
+  fetchTokenName,
+  fetchTokenSymbol,
+} from "./utils/erc20";
 import {
   fetchEndBlock,
   fetchRewardPerBlock,
@@ -57,7 +61,10 @@ export function handleNewSmartChefContract(event: NewSmartChefContract): void {
   smartChef.earnToken = earnToken.id;
   smartChef.startBlock = fetchStartBlock(event.params.smartChef);
   smartChef.endBlock = fetchEndBlock(event.params.smartChef);
-  smartChef.reward = convertTokenToDecimal(fetchRewardPerBlock(event.params.smartChef), earnToken.decimals);
+  smartChef.reward = convertTokenToDecimal(
+    fetchRewardPerBlock(event.params.smartChef),
+    earnToken.decimals
+  );
 
   let userLimit = fetchUserLimit(event.params.smartChef);
   if (userLimit.gt(ZERO_BI)) {
