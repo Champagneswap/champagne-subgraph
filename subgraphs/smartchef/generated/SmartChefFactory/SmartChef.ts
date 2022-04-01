@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt,
+  BigInt
 } from "@graphprotocol/graph-ts";
 
 export class AdminTokenRecovery extends ethereum.Event {
@@ -486,7 +486,7 @@ export class SmartChef extends ethereum.SmartContract {
 
   userInfo(param0: Address): SmartChef__userInfoResult {
     let result = super.call("userInfo", "userInfo(address):(uint256,uint256)", [
-      ethereum.Value.fromAddress(param0),
+      ethereum.Value.fromAddress(param0)
     ]);
 
     return new SmartChef__userInfoResult(

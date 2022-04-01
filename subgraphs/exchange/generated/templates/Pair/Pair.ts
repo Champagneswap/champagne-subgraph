@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt,
+  BigInt
 } from "@graphprotocol/graph-ts";
 
 export class Approval extends ethereum.Event {
@@ -315,7 +315,7 @@ export class Pair extends ethereum.SmartContract {
   approve(spender: Address, value: BigInt): boolean {
     let result = super.call("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(value),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
 
     return result[0].toBoolean();
@@ -324,7 +324,7 @@ export class Pair extends ethereum.SmartContract {
   try_approve(spender: Address, value: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(value),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -335,7 +335,7 @@ export class Pair extends ethereum.SmartContract {
 
   balanceOf(param0: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(param0),
+      ethereum.Value.fromAddress(param0)
     ]);
 
     return result[0].toBigInt();
@@ -343,7 +343,7 @@ export class Pair extends ethereum.SmartContract {
 
   try_balanceOf(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(param0),
+      ethereum.Value.fromAddress(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -354,7 +354,7 @@ export class Pair extends ethereum.SmartContract {
 
   burn(to: Address): Pair__burnResult {
     let result = super.call("burn", "burn(address):(uint256,uint256)", [
-      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromAddress(to)
     ]);
 
     return new Pair__burnResult(result[0].toBigInt(), result[1].toBigInt());
@@ -362,7 +362,7 @@ export class Pair extends ethereum.SmartContract {
 
   try_burn(to: Address): ethereum.CallResult<Pair__burnResult> {
     let result = super.tryCall("burn", "burn(address):(uint256,uint256)", [
-      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromAddress(to)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -453,7 +453,7 @@ export class Pair extends ethereum.SmartContract {
 
   mint(to: Address): BigInt {
     let result = super.call("mint", "mint(address):(uint256)", [
-      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromAddress(to)
     ]);
 
     return result[0].toBigInt();
@@ -461,7 +461,7 @@ export class Pair extends ethereum.SmartContract {
 
   try_mint(to: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("mint", "mint(address):(uint256)", [
-      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromAddress(to)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -487,7 +487,7 @@ export class Pair extends ethereum.SmartContract {
 
   nonces(param0: Address): BigInt {
     let result = super.call("nonces", "nonces(address):(uint256)", [
-      ethereum.Value.fromAddress(param0),
+      ethereum.Value.fromAddress(param0)
     ]);
 
     return result[0].toBigInt();
@@ -495,7 +495,7 @@ export class Pair extends ethereum.SmartContract {
 
   try_nonces(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("nonces", "nonces(address):(uint256)", [
-      ethereum.Value.fromAddress(param0),
+      ethereum.Value.fromAddress(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -613,7 +613,7 @@ export class Pair extends ethereum.SmartContract {
   transfer(to: Address, value: BigInt): boolean {
     let result = super.call("transfer", "transfer(address,uint256):(bool)", [
       ethereum.Value.fromAddress(to),
-      ethereum.Value.fromUnsignedBigInt(value),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
 
     return result[0].toBoolean();
@@ -622,7 +622,7 @@ export class Pair extends ethereum.SmartContract {
   try_transfer(to: Address, value: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("transfer", "transfer(address,uint256):(bool)", [
       ethereum.Value.fromAddress(to),
-      ethereum.Value.fromUnsignedBigInt(value),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -638,7 +638,7 @@ export class Pair extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(from),
         ethereum.Value.fromAddress(to),
-        ethereum.Value.fromUnsignedBigInt(value),
+        ethereum.Value.fromUnsignedBigInt(value)
       ]
     );
 
@@ -656,7 +656,7 @@ export class Pair extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(from),
         ethereum.Value.fromAddress(to),
-        ethereum.Value.fromUnsignedBigInt(value),
+        ethereum.Value.fromUnsignedBigInt(value)
       ]
     );
     if (result.reverted) {

@@ -9,7 +9,7 @@ import {
   Address,
   Bytes,
   BigInt,
-  BigDecimal,
+  BigDecimal
 } from "@graphprotocol/graph-ts";
 
 export class ChampagneFactory extends Entity {
